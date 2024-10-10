@@ -18,6 +18,12 @@ def main():
     dt = 0
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    
+    updateable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    
+    Player.containers = (updateable, drawable)
+    
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
     while True:
@@ -25,9 +31,11 @@ def main():
             if event.type == pygame.QUIT:
                 return
                 
-        player.update(dt)
+        for upd_obj in updateable:
+            upd_obj.update(dt)
         screen.fill(color=(0,0,0))
-        player.draw(screen)
+        for drw_obj in drawable:
+            drw_obj.draw(screen)
         pygame.display.flip()
         print("Screen updated")
         
